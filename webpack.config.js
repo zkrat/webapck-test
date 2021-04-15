@@ -8,8 +8,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const source = path.resolve(__dirname, 'src');
 const devMode = process.env.NODE_ENV !== 'production';
-var $ = require('jquery');
-global.$ = global.jQuery;
 var bower_dir = __dirname + '/bower_components';
 var node_dir = __dirname + '/node_modules';
 var lib_dir = __dirname + '/public/js/libs';
@@ -27,7 +25,9 @@ const plugins = [
         $: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery",
-        "window.$": "jquery"
+        "window.$": "jquery",
+        Nette: "nette-forms",
+        naja: ["naja", "default"],
     })
 ];
 if (devMode) {
@@ -39,7 +39,7 @@ module.exports = {
     entry: './src/app.js',
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, '../www/dist'),
+        path: path.resolve(__dirname, './www/dist'),
 //        library: { type: "system", name: "app" }
     },
 
@@ -69,18 +69,19 @@ module.exports = {
                     },
                     'sass-loader',
                 ],
-            },{
-                test: require.resolve('jquery'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'jQuery'
-                },{
-                    loader: 'expose-loader',
-                    options: '$'
-                }]
-        }
+            }
+            // ,{
+            //     test: require.resolve('jquery'),
+            //     use: [{
+            //         loader: 'expose-loader',
+            //         options: 'jQuery'
+            //     },{
+            //         loader: 'expose-loader',
+            //         options: '$'
+            //     }]
+            // }
         ],
     },
-    externals: ['jquery']
+    // externals: ['jquery']
 
 };
